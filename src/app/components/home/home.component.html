@@ -6,7 +6,7 @@
       [formControl]="bookSearch"
       name="searchKey"
       type="text"
-      placeholder="Search Books"
+      placeholder="title | author"
       class="tw-border-0 tw-bg-inherit"
     >
   </div>
@@ -20,4 +20,28 @@
       </li>
     </ul>
   </section>
+  <div *ngIf="books && books.length > 0">
+    <table class="table-view">
+      <thead>
+        <tr class="table-row">
+          <th class="table-header">Title and Sub Title</th>
+          <th class="table-header">Author</th>
+          <th class="table-header">First Publish Year</th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <tr *ngFor="let book of books" class="row-data">
+          <td>
+            <a class="tw-no-underline" href="https://openlibrary.org{{ book.key }}" target="_blank">{{ book.title }}</a>
+          </td>
+          <td>
+            {{ book.author_name  && book.author_name.length > 0 ? book.author_name[0] : "Unknown" }}
+          </td>
+          <td>{{ book.first_publish_year }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button (click)="offset = offset + 10;getBooksbyTitleAndAuthor()">Prev</button><button (click)="bookSearch.setValue('')">clear</button><button (click)="offset = offset + 10;getBooksbyTitleAndAuthor()">Next</button>
+  </div>
+  
 </div>
